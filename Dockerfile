@@ -1,10 +1,13 @@
 FROM alpine:3.7
 
-ENV HELM_LATEST_VERSION="v2.8.1"
+ENV HELM_VERSION="v2.8.1"
+ENV KUBE_VERSION="v1.9.3"
 
-RUN apk add --update ca-certificates curl git py-pip \
+RUN apk add --update bash ca-certificates curl git py-pip \
  && pip install awscli --upgrade \
- && curl -sS http://storage.googleapis.com/kubernetes-helm/helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz | \
+ && curl -sSLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBE_VERSION}/bin/linux/amd64/kubectl \
+ && chmod +x /usr/local/bin/kubectl \
+ && curl -sS http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
     tar xvz --strip 1 -C /usr/local/bin linux-amd64/helm \
  && helm init --client-only
 
