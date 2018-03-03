@@ -3,6 +3,9 @@ FROM alpine:3.7
 ENV HELM_VERSION="v2.8.1"
 ENV KUBE_VERSION="v1.9.3"
 
+ENV KUBERNETES_SERVICE_HOST=kubernetes.default
+ENV KUBERNETES_SERVICE_PORT=443
+
 RUN apk add --update bash ca-certificates curl git py-pip \
  && pip install awscli --upgrade \
  && curl -sSLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBE_VERSION}/bin/linux/amd64/kubectl \
