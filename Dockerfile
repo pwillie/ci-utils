@@ -2,6 +2,7 @@ FROM alpine:3.7
 
 ENV HELM_VERSION="v2.8.1"
 ENV KUBE_VERSION="v1.9.3"
+ENV YQ_VERSION="1.14.1"
 
 ENV KUBERNETES_SERVICE_HOST=kubernetes.default
 ENV KUBERNETES_SERVICE_PORT=443
@@ -12,5 +13,7 @@ RUN apk add --update bash ca-certificates curl git py-pip \
  && chmod +x /usr/local/bin/kubectl \
  && curl -sS http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
     tar xvz --strip 1 -C /usr/local/bin linux-amd64/helm \
+ && curl -sSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 \
+ && chmod +x /usr/local/bin/yq \
  && helm init --client-only
 
